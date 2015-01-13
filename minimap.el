@@ -303,6 +303,11 @@ when you enter a buffer which is not derived from
   :type 'boolean
   :group 'minimap)
 
+(defcustom minimap-show-mode-line t
+  "Whether the minimap should have a mode-line."
+  :type 'boolean
+  :group 'minimap)
+
 ;;; Internal variables
 
 ;; The buffer currently displayed in the minimap
@@ -443,6 +448,10 @@ Re-use already existing minimap window if possible."
       (rename-buffer minimap-buffer-name)
       ;; no cursor plox
       (setq cursor-type nil)
+      ;; show the mode line?
+      (unless minimap-show-mode-line
+        (setq mode-line-format nil)
+        )
       ;; Do not fold lines in the minimap.
       (setq truncate-lines t)
       (when minimap-dedicated-window
