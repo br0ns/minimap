@@ -89,6 +89,11 @@ TrueType font for this.  After changing this, you should
 recreate the minimap to avoid problems with recentering."
   :group 'minimap)
 
+(defface minimap-highlight-line-face
+  '((default :background "yellow" :foreground "yellow"))
+  "Face used for highlighting the current line in the minimap buffer."
+  :group 'minimap)
+
 (defface minimap-active-region-background
   '((((background dark)) (:background "#700000"))
     (t (:background "#C847D8FEFFFF")))
@@ -521,7 +526,7 @@ When FORCE, enforce update of the active region."
 	    (when minimap-highlight-line
 	      (unless minimap-line-overlay
 		(setq minimap-line-overlay (make-overlay (point) (1+ (point)) nil t))
-		(overlay-put minimap-line-overlay 'face '(:background "yellow" :foreground "yellow"))
+		(overlay-put minimap-line-overlay 'face 'minimap-highlight-line-face)
 		(overlay-put minimap-line-overlay 'priority 6))
 	      (move-overlay minimap-line-overlay (point) (line-beginning-position 2))
 	      )
