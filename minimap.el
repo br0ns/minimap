@@ -429,6 +429,8 @@ Re-use already existing minimap window if possible."
       (switch-to-buffer indbuf t t)
       (minimap-kill-buffer)
       (rename-buffer minimap-buffer-name)
+      ;; no cursor plox
+      (setq cursor-type nil)
       ;; Do not fold lines in the minimap.
       (setq truncate-lines t)
       (when minimap-dedicated-window
