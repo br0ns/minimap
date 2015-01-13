@@ -149,6 +149,13 @@ Can be either the symbol `left' or `right'."
 		 (const :tag "Right" right))
   :group 'minimap)
 
+(defcustom minimap-semantic-location 'middle
+  "Location of semantic lables.
+Can be either the symbol `top' or `middle'."
+  :type '(choice (const :tag "Top" top)
+                 (const :tag "Middle" middle))
+  :group 'minimap)
+
 (defcustom minimap-buffer-name " *MINIMAP*"
   "Buffer name of minimap sidebar."
   :type 'string
@@ -826,8 +833,11 @@ TAGS is the list of tags.  If it is t, fetch tags from buffer."
 					   (intern (format "minimap-semantic-%s-face"
 							   (symbol-name class)))))))
 		(overlay-put ovnew 'priority 4)
-		(setq start
-		      (minimap-line-to-pos (/ (+ lstart lend) 2)))
+    (if (eq minimap-semantic-location 'top)
+        (setq start (minimap-line-to-pos lstart))
+      (setq start
+            (minimap-line-to-pos (/ (+ lstart lend) 2)))
+      )
 		(goto-char start)
 		(while (looking-at "^$")
 		  (forward-line -1))
